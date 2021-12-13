@@ -1,0 +1,213 @@
+
+* {
+	box-sizing: border-box;
+}
+body {
+	font-family: 'Montserrat', sans-serif;
+	line-height: 1.6;
+	margin: 0;
+	min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+/* ================================= 
+  Navbar
+==================================== */
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+h2,
+h3,
+a {
+	color: #34495e;
+}
+
+a {
+	text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+.logo {
+	margin: 0;
+	font-size: 1.45em;
+}
+
+.main-nav {
+	margin-top: 5px;
+    padding: 8px;
+
+}
+.logo a,
+.main-nav a {
+	padding: 10px 15px;
+	text-transform: uppercase;
+	text-align: center;
+	display: block;
+}
+
+.main-nav a {
+	color: #34495e;
+	font-size: .99em;
+}
+
+.main-nav a:hover {
+	color: #718daa;
+}
+
+
+
+.header {
+	padding-top: .5em;
+	padding-bottom: .5em;
+	border: 1px solid #a2a2a2;
+	background-color: #f4f4f4;
+	-webkit-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+/* ================================= 
+  Sidebar
+==================================== */
+
+.sidebar{
+    width: 300px;
+    background: #EEEEEE;
+    flex-shrink: 0;
+    border-radius: 1rem;
+
+}
+.body{
+    flex: 1;
+    display: flex;
+}
+.project{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 12px;
+}
+.p-name{
+    display: flex;
+    padding: 18px 18px;
+    border-radius: 1rem;
+    justify-content: space-between;
+}
+.active{
+    background-color: 	#C0C0C0;
+}
+.enterProject{
+    display: flex;
+    transition: 1s;
+
+}
+.p-form::after{
+    display: none;
+    gap: 8px;
+    transform: scaleY(10deg);
+}
+.p-form button{
+    padding: 8px;
+    border-radius: 1rem;
+}
+.active-icon::after{
+    content: "️🗑️";
+    margin-left: 0;
+    width: 100vw;
+
+}
+.active-icon::before{
+    content: "️\0FE0F";
+    width: 100vw;
+
+}
+/* ================================= 
+  Todos
+==================================== */
+
+.wrapper{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    padding: 16px;
+    width: 100vw;
+    gap: 25px;
+}
+.todo-form-container{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 100px;
+    align-items: center;
+    gap: 8px;
+    
+}
+input{
+    max-height: 20px;
+}
+button{
+    max-width: 10vw;
+    padding:8px ;
+}
+.wrapper h1{
+    border-bottom: 1px gold solid;
+}
+/* ================================= 
+  Media Queries
+==================================== */
+@media (min-width: 769px) {
+	.header,
+	.main-nav {
+		display: flex;
+	}
+	.header {
+		flex-direction: column;
+		align-items: center;
+	}
+
+}
+
+@media (min-width: 1025px) {
+	.header {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+}
+@media screen and (max-width: 600px) {
+    .sidebar{
+        width: 150px;
+    }
+    .project{
+        display: flex;
+        padding: 10px 10px;
+        justify-content: center;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    button{
+        max-width: 4rem;
+    }
+    .p-form {
+        flex-wrap: nowrap;
+        
+    }
+    .p-form button{
+        max-width: 20vw;
+    }
+    .p-form input{
+        flex-wrap: nowrap;
+        max-width: 20vw;
+    }
+  }
+  
