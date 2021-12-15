@@ -100,6 +100,7 @@ const updateView =(state) =>{
         const sidebar = document.querySelector('.project') 
         sidebar.innerHTML = ''
         renderProjects()
+        start()// if not dor this then project doesnt init
         return
     }
     
