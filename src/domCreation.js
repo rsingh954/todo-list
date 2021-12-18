@@ -1,6 +1,6 @@
 import './styles.css'
 import { addProject, showForm } from './events';
-import { manageProjects } from './projectManager';
+// import { manageProjects } from './projectManager';
 import { submitToDo } from './events';
 import { submitProject } from './events';
 
@@ -14,7 +14,7 @@ const header = (() =>{
     const addProject = document.createElement('a')
     addProject.classList.add('add-project')
     addProject.textContent = "Add Project"
-    a.textContent = "DoTo List"
+    a.textContent = "ToDo List"
 
     header.classList.add('header')
     h1.classList.add('logo')
@@ -66,7 +66,7 @@ const toDoForm = (() =>{
     const priorityContainer = document.createElement('div')
     const btn = document.createElement("button")
     const submit = document.createElement("button")
-
+    
 
     wrapper.classList.add('wrapper')
     submit.textContent = 'Submit'

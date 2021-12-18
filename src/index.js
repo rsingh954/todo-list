@@ -3,7 +3,7 @@ import { manageLocal } from "./manageLocalStorage";
 import { renderProjects, renderToDo, updateView } from "./renderDom";
 import { Project } from "./projects";
 import { todoFactory } from "./todo";
-import { manageProjects } from "./projectManager";
+import { addProject, addTodo, removeProject, retrieveProject, removeTodo} from "./projectManager";
 import { addProjectForm } from "./events";
 
 
@@ -11,23 +11,15 @@ const init = (()=>{
     let todo = todoFactory('Work', "do shit","", 'Today', "Low")
     let todo1 = todoFactory('Eat', "make food","", 'Today', "high")
     let todo2 = todoFactory('vape', "buy liquid","", 'Today', "high")
-    const defaultProject = Project('default');
-
+    const defaultProject = Project('Welcome');
     const newProject = Project('New');
 
-    const dooProject = Project('Dooo');
-    manageProjects().addProject(defaultProject)
-    manageProjects().addTodo(defaultProject, todo1)
-    manageProjects().addTodo(defaultProject, todo)
-    
-    manageProjects().addProject(newProject)
-    manageProjects().addProject(dooProject)
-    
-    manageProjects().addTodo(newProject, todo1)
-    manageProjects().addTodo(newProject, todo)
-
-    manageProjects().addTodo(dooProject, todo)
-
+    addProject(defaultProject)
+    addTodo(defaultProject, todo1)
+    addTodo(defaultProject, todo)
+    addProject(newProject)
+    addTodo(newProject, todo1)
+    addTodo(newProject, todo)
     renderProjects()
     addProjectForm()
 })()
@@ -40,7 +32,7 @@ export function start(){
         b.addEventListener('click', e =>{
             const {target} = e
             if(target.classList.contains('active-icon')) {
-                manageProjects().removeProject(target.id)
+                removeProject(target.id)
                 renderProjects()
                 updateView('project')
                 return
@@ -49,13 +41,12 @@ export function start(){
             removeActiveClass()
             target.classList.toggle('active')
             target.children[0].classList.toggle('active-icon')
-            let todo = manageProjects().retrieveProject(target.id).todos
+            let todo = retrieveProject(target.id).todos
             container.innerHTML = ''
             renderToDo(todo)
             removeToDoBtn()//Initializes the function or it wont work
         })
     })
-    
     function removeActiveClass(){
         const project  = document.querySelectorAll('.p-name')
         const icon  = document.querySelectorAll('i')
@@ -75,9 +66,9 @@ export function removeToDoBtn(){
         btn.addEventListener('click', e =>{
             const {target} = e
             const currentProject = document.querySelector('.active')
-            const project = manageProjects().retrieveProject(currentProject.id)
+            const project = retrieveProject(currentProject.id)
             console.log(target.id)
-            manageProjects().removeTodo(project, target.id)
+            removeTodo(project, target.id)
             updateView('todo')
         })
     })

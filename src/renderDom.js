@@ -1,5 +1,5 @@
 import { manageLocal } from "./manageLocalStorage";
-import { manageProjects } from './projectManager';
+import { retrieveProject } from './projectManager';
 import { start } from ".";
 import { removeToDoBtn } from ".";
 
@@ -80,15 +80,14 @@ const renderToDo = ((todos)=>{
 })
 function getProject() {
     const active = document.querySelector('.active')
-    return manageProjects().retrieveProject(active.id)
+    return retrieveProject(active.id)
 }
 
-//Very Important function
 const updateView =(state) =>{
     if(state == 'todo'){
         const active = document.querySelector('.active') 
         const form  = document.querySelector('.todo-form-container')
-        let project = manageProjects().retrieveProject(active.id)
+        let project = retrieveProject(active.id)
         const todos = project.todos 
         let container = document.querySelector('.todos')
         container.innerHTML = ''
@@ -100,7 +99,7 @@ const updateView =(state) =>{
         const sidebar = document.querySelector('.project') 
         sidebar.innerHTML = ''
         renderProjects()
-        start()// if not dor this then project doesnt init
+        start()
         return
     }
     

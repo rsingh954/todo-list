@@ -1,15 +1,13 @@
 import { removeToDoBtn, start } from ".";
 import { manageLocal } from "./manageLocalStorage";
 
-export const manageProjects = (project) =>{
-
-    function addProject(project){
+    export function addProject(project){
         const projects = manageLocal.getProjects()
         if(projects.filter(p => p._name === project._name).length > 0) return "Exists"
         projects.push(project)
         localStorage.setItem('projects', JSON.stringify(projects))
     }
-    function removeProject(title){
+    export function removeProject(title){
         const projects = manageLocal.getProjects()
         projects.filter((p, i) => {
             if(p._name == title){
@@ -18,7 +16,7 @@ export const manageProjects = (project) =>{
             }
         })
     }
-    function addTodo(project, todo){
+    export function addTodo(project, todo){
         const projects = manageLocal.getProjects()
         if(projects.find((p) => p._name == project._name).todos.find((t) => t._title == todo._title)) return
         else{
@@ -27,7 +25,7 @@ export const manageProjects = (project) =>{
         }
 
     }
-    function removeTodo(project, title){
+    export function removeTodo(project, title){
         const projects = manageLocal.getProjects()
         let [filtered]= projects.filter((f) => f._name === project._name)
         for(let i = 0; i <= projects.length-1; i++){
@@ -43,12 +41,12 @@ export const manageProjects = (project) =>{
             }
         }
     }
-    function retrieveProject(id){
+    export function retrieveProject(id){
         const projects = manageLocal.getProjects()
         let [project] = projects.filter((p) => p._id == id)
 
         return project
     }
-    return {addProject,removeProject, addTodo, removeTodo, retrieveProject}
-}
+
+    
 
