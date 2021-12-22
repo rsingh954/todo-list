@@ -5,31 +5,39 @@ import { Project } from "./projects";
 import { todoFactory } from "./todo";
 import { addProject, addTodo, removeProject, retrieveProject, removeTodo} from "./projectManager";
 import { addProjectForm } from "./events";
+import {modal, populateModal, toggleModal, windowOnClick} from './todoModal'
+import { renderCompleteView } from "./completedToDo";
+import { allToDos, renderAllToDos } from "./renderAllToDos";
 
-
+allToDos()
 const init = (()=>{
-    let todo = todoFactory('Work', "do shit","", 'Today', "Low")
-    let todo1 = todoFactory('Eat', "make food","", 'Today', "high")
-    let todo2 = todoFactory('vape', "buy liquid","", 'Today', "high")
+    let todo = todoFactory('Work', "do shit","", '2021-12-24', "Low")
+    let todo1 = todoFactory('Eat', "make food","", '2021-12-28', "high")
     const defaultProject = Project('Welcome');
-    const newProject = Project('New');
 
     addProject(defaultProject)
     addTodo(defaultProject, todo1)
     addTodo(defaultProject, todo)
-    addProject(newProject)
-    addTodo(newProject, todo1)
-    addTodo(newProject, todo)
     renderProjects()
     addProjectForm()
 })()
-
-
-
+export function removeActiveClass(){
+    const project  = document.querySelectorAll('.p-name')
+    const icon  = document.querySelectorAll('i')
+    icon.forEach((i)=>{
+        i.classList.remove('active-icon')
+    })
+    project.forEach((p) =>{
+        p.classList.remove('active')
+    })
+}
 export function start(){
-    const a = document.querySelectorAll('.p-name')
-    a.forEach((b) =>{
-        b.addEventListener('click', e =>{
+    const projectNames = document.querySelectorAll('.p-name')
+    const getCompletedTodos = manageLocal.getCompleted()
+    const completeName = document.querySelector('.completed-count')
+    completeName.textContent = " " + getCompletedTodos.length
+    projectNames.forEach((name) =>{
+        name.addEventListener('click', e =>{
             const {target} = e
             if(target.classList.contains('active-icon')) {
                 removeProject(target.id)
@@ -39,26 +47,20 @@ export function start(){
             }
             let container = document.querySelector('.todos')
             removeActiveClass()
+            const complete = document.querySelector('.completed')
+            const allTodo = document.querySelector('.all-todo')
+            allTodo.classList.remove('active')
+            complete.classList.remove('active')
             target.classList.toggle('active')
             target.children[0].classList.toggle('active-icon')
             let todo = retrieveProject(target.id).todos
             container.innerHTML = ''
             renderToDo(todo)
             removeToDoBtn()//Initializes the function or it wont work
+            handleModal()
         })
     })
-    function removeActiveClass(){
-        const project  = document.querySelectorAll('.p-name')
-        const icon  = document.querySelectorAll('i')
-        icon.forEach((i)=>{
-            i.classList.remove('active-icon')
-        })
 
-        project.forEach((p) =>{
-            p.classList.remove('active')
-        })
-    }
-    
 }
 export function removeToDoBtn(){
     const removeToDoBtn = document.querySelectorAll('.remove-todo') 
@@ -72,8 +74,40 @@ export function removeToDoBtn(){
             updateView('todo')
         })
     })
-    
 }
 
+export function handleModal(){
+
+    const trigger = document.querySelectorAll(".container");
+    const closeButton = document.querySelector(".close-button");
+
+    trigger.forEach((trig) =>{
+        trig.addEventListener("click", e=>{
+
+            if(e.target.classList.value === 'remove-todo')return
+            
+            populateModal(e.target.id)
+            toggleModal()
+        });
+    })
+    closeButton.addEventListener("click", toggleModal);
+    window.addEventListener("click", windowOnClick);
+}
 
 start()
+
+modal()
+const complete = document.querySelector('.completed')
+complete.toggleAttribute('click')
+complete.addEventListener('click', e =>{
+    complete.classList.toggle('active')
+    renderCompleteView()
+})
+
+const allTodo = document.querySelector('.all-todo')
+allTodo.addEventListener('click', e =>{
+    allTodo.classList.toggle('active')
+    removeActiveClass()
+    let todos = allToDos()
+    renderAllToDos(todos)
+})

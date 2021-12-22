@@ -35,16 +35,25 @@ const sidebar = (()=>{
     const ul = document.createElement('ul')
     const li = document.createElement('li')
     const body = document.createElement('div')
-    
-    
+    const completed = document.createElement('div')
+    const span = document.createElement('span')
+    const allTodos = document.createElement('div')
+    allTodos.textContent = 'View All Tasks'
+
+    completed.classList.add('completed')
+    completed.textContent = 'Completed'
+    completed.appendChild(span)
+    span.classList.add('completed-count')
+    allTodos.classList.add('all-todo')
     body.classList.add('body')
     sidebar.classList.add('sidebar')
     ul.classList.add('projects')
     li.classList.add('project')
 
-
+    sidebar.appendChild(allTodos)
     ul.appendChild(li)
     sidebar.appendChild(ul)
+    sidebar.appendChild(completed)
     body.appendChild(sidebar)
     document.body.appendChild(body)
 })()
@@ -153,6 +162,5 @@ const projectForm = (()=>{
     form.appendChild(input)
     form.appendChild(submit)
     project.append(form)
-
 })
 export{header,sidebar, toDoForm, projectForm}

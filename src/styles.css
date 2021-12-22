@@ -59,9 +59,6 @@ a {
 .main-nav a:hover {
 	color: #718daa;
 }
-
-
-
 .header {
 	padding-top: .5em;
 	padding-bottom: .5em;
@@ -97,7 +94,7 @@ a {
     gap: 2rem;
     padding: 12px;
 }
-.p-name{
+.p-name { 
     display: flex;
     padding: 18px 18px;
     border-radius: 1rem;
@@ -131,10 +128,32 @@ a {
     width: 100vw;
 
 }
+.completed{
+    position: absolute;
+    bottom: 10px;
+    padding: 18px 18px;
+    border-radius: 1rem;
+    margin-left: 15px;
+    cursor: pointer;
+}
+.all-todo{
+    cursor: pointer;
+    padding: 24px;
+}
 /* ================================= 
   Todos
 ==================================== */
-
+.container{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+    border: solid black 1px;
+    border-radius: 1rem;
+    padding: 0px 30px;
+}
 .wrapper{
     display: flex;
     flex-direction: column-reverse;
@@ -159,9 +178,61 @@ button{
     max-width: 10vw;
     padding:8px ;
 }
-.wrapper h1{
-    border-bottom: 1px gold solid;
+/* ================================= 
+  MODAL
+==================================== */
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 32px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 24rem;
+    border-radius: 0.5rem;
+}
+
+.title-modal{
+    padding: 0;
+    margin: 0;
+}
+.close-button {
+    margin-left:auto;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
+}
+
+.close-button:hover {
+    background-color: darkgray;
+}
+
+.show-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+} 
+
 /* ================================= 
   Media Queries
 ==================================== */
@@ -176,7 +247,6 @@ button{
 	}
 
 }
-
 @media (min-width: 1025px) {
 	.header {
 		flex-direction: row;
@@ -208,6 +278,13 @@ button{
     .p-form input{
         flex-wrap: nowrap;
         max-width: 20vw;
+    }
+    .container{
+        padding: 8px;
+        flex-direction: column;
+    }
+    h1{
+        text-align: center;
     }
   }
   
