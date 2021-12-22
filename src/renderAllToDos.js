@@ -14,8 +14,8 @@ export const allToDos = () =>{
     return todos
 } 
 
-export const renderAllToDos = (todos) =>{
-    removeActiveClass()
+export const renderAllToDos = () =>{
+    let todos = allToDos();
     const wrapper = document.querySelector('.todos')
     wrapper.innerHTML = ''
     renderToDo(todos)

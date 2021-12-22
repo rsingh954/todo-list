@@ -9,22 +9,26 @@ import {modal, populateModal, toggleModal, windowOnClick} from './todoModal'
 import { renderCompleteView } from "./completedToDo";
 import { allToDos, renderAllToDos } from "./renderAllToDos";
 
-allToDos()
+
 const init = (()=>{
     let todo = todoFactory('Work', "do shit","", '2021-12-24', "Low")
     let todo1 = todoFactory('Eat', "make food","", '2021-12-28', "high")
     const defaultProject = Project('Welcome');
-
     addProject(defaultProject)
     addTodo(defaultProject, todo1)
     addTodo(defaultProject, todo)
     renderProjects()
     addProjectForm()
+    allToDos()
 })()
 export function removeActiveClass(){
     const project  = document.querySelectorAll('.p-name')
     const icon  = document.querySelectorAll('i')
-    icon.forEach((i)=>{
+    const complete = document.querySelector('.completed')
+    const allTodo = document.querySelector('.all-todo')
+    allTodo.classList.remove('active')
+    complete.classList.remove('active')
+        icon.forEach((i)=>{
         i.classList.remove('active-icon')
     })
     project.forEach((p) =>{
@@ -43,14 +47,11 @@ export function start(){
                 removeProject(target.id)
                 renderProjects()
                 updateView('project')
+                removeActiveClass()
                 return
             }
             let container = document.querySelector('.todos')
             removeActiveClass()
-            const complete = document.querySelector('.completed')
-            const allTodo = document.querySelector('.all-todo')
-            allTodo.classList.remove('active')
-            complete.classList.remove('active')
             target.classList.toggle('active')
             target.children[0].classList.toggle('active-icon')
             let todo = retrieveProject(target.id).todos
@@ -60,7 +61,6 @@ export function start(){
             handleModal()
         })
     })
-
 }
 export function removeToDoBtn(){
     const removeToDoBtn = document.querySelectorAll('.remove-todo') 
@@ -75,17 +75,12 @@ export function removeToDoBtn(){
         })
     })
 }
-
 export function handleModal(){
-
     const trigger = document.querySelectorAll(".container");
     const closeButton = document.querySelector(".close-button");
-
     trigger.forEach((trig) =>{
         trig.addEventListener("click", e=>{
-
             if(e.target.classList.value === 'remove-todo')return
-            
             populateModal(e.target.id)
             toggleModal()
         });
@@ -93,9 +88,7 @@ export function handleModal(){
     closeButton.addEventListener("click", toggleModal);
     window.addEventListener("click", windowOnClick);
 }
-
 start()
-
 modal()
 const complete = document.querySelector('.completed')
 complete.toggleAttribute('click')
@@ -103,11 +96,9 @@ complete.addEventListener('click', e =>{
     complete.classList.toggle('active')
     renderCompleteView()
 })
-
 const allTodo = document.querySelector('.all-todo')
 allTodo.addEventListener('click', e =>{
-    allTodo.classList.toggle('active')
     removeActiveClass()
-    let todos = allToDos()
-    renderAllToDos(todos)
+    allTodo.classList.toggle('active')
+    renderAllToDos()
 })
