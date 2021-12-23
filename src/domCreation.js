@@ -1,8 +1,5 @@
 import './styles.css'
-import { addProject, showForm } from './events';
-// import { manageProjects } from './projectManager';
-import { submitToDo } from './events';
-import { submitProject } from './events';
+import { submitProject, submitToDo, addProject, showForm } from './events';
 
 
 const header = (() =>{
@@ -75,7 +72,11 @@ const toDoForm = (() =>{
     const priorityContainer = document.createElement('div')
     const btn = document.createElement("button")
     const submit = document.createElement("button")
+    const closeForm = document.createElement('span')
+    closeForm.classList.add('close-button')
+    closeForm.textContent = `x`
     
+    btn.classList.add('add-todo')
 
     wrapper.classList.add('wrapper')
     submit.textContent = 'Submit'
@@ -102,8 +103,10 @@ const toDoForm = (() =>{
     note.textContent = "Notes"
     
     priorityContainer.classList.add("priority")
+
     priorityContainer.innerHTML = `
     <h4>Priority</h4>
+    <div class = priority-container>
     <label class="radio-container">Low</label>
         <input type="radio" name="priority" value = "low">
 
@@ -112,11 +115,13 @@ const toDoForm = (() =>{
 
     <label class="radio-container">High</label>
       <input type="radio" name="priority" value = "high">
+    </div>
     `
 
     formContainer.classList.add('todo-form-container')
     container.classList.add('todos')
 
+    formContainer.appendChild(closeForm)
     formContainer.appendChild(title)
     formContainer.appendChild(titleInput)
 
@@ -163,4 +168,4 @@ const projectForm = (()=>{
     form.appendChild(submit)
     project.append(form)
 })
-export{header,sidebar, toDoForm, projectForm}
+export{header,sidebar, projectForm}

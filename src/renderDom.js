@@ -1,10 +1,12 @@
 import { manageLocal } from "./manageLocalStorage";
 import { retrieveProject } from './projectManager';
-import { start,removeToDoBtn, handleModal } from ".";
+import { start } from ".";
 import { format, parseISO  } from "date-fns"
-
+import { handleModal } from "./events";
+import { removeToDoBtn } from "./events";
 const renderProjects = (()=>{
     const projects = manageLocal.getProjects()
+
     const li = document.querySelector('.project')
 
     for(let i = 0; i <= projects.length-1; i++){
@@ -17,9 +19,7 @@ const renderProjects = (()=>{
         project.id = projects[i]._id
         li.appendChild(project)
         project.appendChild(icon)
-
     }
-   
 })
 
 const renderToDo = ((todos)=>{
@@ -30,6 +30,38 @@ const renderToDo = ((todos)=>{
     let wrapper = document.querySelector('.wrapper')
 
 
+    const container = document.createElement('div')
+    container.classList.add('container-heading')
+
+    const title = document.createElement('div')
+    title.classList.add('title')
+    title.textContent = 'Task'
+
+    const dueDate = document.createElement('div')
+    dueDate.classList.add('dueDate')
+    dueDate.textContent = 'Due Date'
+
+    const priority = document.createElement('div')
+    priority.classList.add('priority-todo')
+    priority.textContent = 'Priority'
+
+
+    const button = document.createElement('a')
+    button.classList.add('remove-todo')
+    button.innerHTML = ''
+
+
+    container.appendChild(title)
+    container.appendChild(dueDate)
+    container.appendChild(priority)
+    container.appendChild(button)
+
+
+    toDoContainer.appendChild(container)
+    wrapper.appendChild(toDoContainer)
+    body.appendChild(wrapper)
+
+
     for(let i = 0; i < todos.length; i++){
             //Card
             const container = document.createElement('div')
@@ -37,7 +69,7 @@ const renderToDo = ((todos)=>{
             container.id = todos[i]._id
 
             //title
-            const title = document.createElement('h1')
+            const title = document.createElement('h4')
             title.classList.add('title')
             title.id = todos[i]._id
             title.textContent = todos[i]._title
@@ -46,20 +78,22 @@ const renderToDo = ((todos)=>{
             const dueDate = document.createElement('div')
             dueDate.classList.add('dueDate')
             dueDate.id =todos[i]._id
-            dueDate.textContent = 'Due Date: ' + format(new Date(todos[i].dueDate), 'MM/dd/yyyy')
+            dueDate.textContent = format(new Date(todos[i].dueDate), 'MM/dd/yyyy')
 
             //Priority
             const priority = document.createElement('div')
-            priority.classList.add('priority')
+            priority.classList.add('priority-todo')
             priority.id =todos[i]._id
 
-            priority.textContent = 'Priority: ' + todos[i].priority
+            priority.textContent = todos[i].priority
 
-            // delete todo
+            // move todo to complete
             const button = document.createElement('a')
             button.id = todos[i]._title
             button.classList.add('remove-todo')
             button.innerHTML = "&#10006"
+
+
 
             container.appendChild(title)
             container.appendChild(dueDate)
@@ -88,9 +122,7 @@ export const retrieveTodo = () =>{
 }
 const updateView =(state) =>{
     if(state == 'todo'){
-        // const active = document.querySelector('.active') 
         const form  = document.querySelector('.todo-form-container')
-        // let project = retrieveProject(active.id)
         let container = document.querySelector('.todos')
         container.innerHTML = '';
         renderToDo(retrieveTodo())

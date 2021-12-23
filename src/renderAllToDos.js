@@ -1,4 +1,5 @@
 import { removeActiveClass } from ".";
+import { handleModal } from "./events";
 import { manageLocal } from "./manageLocalStorage"
 import { renderToDo } from "./renderDom";
 
@@ -10,7 +11,6 @@ export const allToDos = () =>{
     projects.forEach((project) => {
         todos.push(...project.todos)
     })
-    console.log(todos)
     return todos
 } 
 
@@ -19,5 +19,5 @@ export const renderAllToDos = () =>{
     const wrapper = document.querySelector('.todos')
     wrapper.innerHTML = ''
     renderToDo(todos)
-
+    handleModal()
 }

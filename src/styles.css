@@ -150,9 +150,8 @@ a {
     justify-content: space-between;
     gap: 16px;
     margin-bottom: 10px;
-    border: solid black 1px;
     border-radius: 1rem;
-    padding: 0px 30px;
+    padding: 0px 5px;
 }
 .wrapper{
     display: flex;
@@ -164,12 +163,15 @@ a {
 }
 .todo-form-container{
     display: none;
+    text-align: center;
+    width: 30vw;
+    background-color: white;
     flex-direction: column;
-    justify-content: center;
-    margin-top: 100px;
     align-items: center;
     gap: 8px;
-    
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
 }
 input{
     max-height: 20px;
@@ -177,6 +179,26 @@ input{
 button{
     max-width: 10vw;
     padding:8px ;
+}
+.add-todo{
+    margin-right: auto;
+}
+.priority{
+    display: flex;
+    flex-direction: column;
+}
+.priority-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.container-heading{
+    display: flex;
+    justify-content: space-between;
+}
+.priority-todo,.dueDate, .title{
+    font-size: 12px;
 }
 /* ================================= 
   MODAL
@@ -281,10 +303,23 @@ button{
     }
     .container{
         padding: 8px;
-        flex-direction: column;
+        /* flex-direction: column; */
     }
     h1{
         text-align: center;
     }
+    .priority-todo,.dueDate, .title{
+        font-size: 12px;
+    }
+
   }
   
+  @media screen and (max-width: 350px) {
+    .container-heading{
+        display: none;
+    } 
+    .container{
+        flex-direction: column; 
+        border: black 1px solid;
+    }
+  }

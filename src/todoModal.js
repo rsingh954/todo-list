@@ -1,9 +1,11 @@
 import { retrieveTodo } from "./renderDom"
-import { format, parseISO  } from "date-fns"
+import { format  } from "date-fns"
+import { showForm } from "./events"
+import { allToDos } from "./renderAllToDos"
 
 export function populateModal(id) {
     if(!Number(id)) return
-    const todos = retrieveTodo()
+    const todos = allToDos()
     const todo = todos.filter((todo) => todo._id == id)
 
     //TITLE 
@@ -64,22 +66,17 @@ export const modal = () =>{
     body.appendChild(modal) 
 
 }
-
-
-
 export function toggleModal() {
     const modal = document.querySelector(".modal");
     const trigger = document.querySelector(".container");
     const closeButton = document.querySelector(".close-button");
     modal.classList.toggle("show-modal");
 }
-
-
 export function windowOnClick(event) {
     const modal = document.querySelector(".modal");
     const trigger = document.querySelector(".container");
     const closeButton = document.querySelector(".close-button");
-    if (event.target === modal) {
+    if (event.target === modal || event.target === closeButton) {
         toggleModal();
     }
 }
