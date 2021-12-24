@@ -76,7 +76,7 @@ export function windowOnClick(event) {
     const modal = document.querySelector(".modal");
     const trigger = document.querySelector(".container");
     const closeButton = document.querySelector(".close-button");
-    if (event.target === modal || event.target === closeButton) {
+    if (event.target === modal || event.target.classList.value === 'close-button' ) {
         toggleModal();
     }
 }
