@@ -20,7 +20,7 @@ export function submitToDo(e){
     e.preventDefault()
     const active = document.querySelector('.active')
     let project = retrieveProject(active.id)
-    
+
     const title = document.querySelector('input[name="title"]')
     const description = document.querySelector('input[name="description"]')
     const date = document.querySelector('input[name="date"]')
@@ -53,6 +53,7 @@ export function submitProject(e){
 export const allTodoEvent = () =>{
     const allTodo = document.querySelector('.all-todo')
     allTodo.addEventListener('click', e =>{
+        e.preventDefault
         removeActiveClass()
         allTodo.classList.toggle('active')
         const btn = document.querySelector('.add-todo')
@@ -66,12 +67,13 @@ export const handleCompleteViewEvent = () =>{
     const complete = document.querySelector('.completed')
     complete.toggleAttribute('click')
     complete.addEventListener('click', e =>{
-    complete.classList.toggle('active')
-    const btn = document.querySelector('.add-todo')
-    btn.style.display = 'none' 
-    renderCompleteView()
-    const todoForm = document.querySelector('.todo-form-container')
-    todoForm.style.display = 'none'
+        e.preventDefault
+        complete.classList.toggle('active')
+        const btn = document.querySelector('.add-todo')
+        btn.style.display = 'none' 
+        renderCompleteView()
+        const todoForm = document.querySelector('.todo-form-container')
+        todoForm.style.display = 'none'
     })
 }
 export function handleModal(){
@@ -79,18 +81,20 @@ export function handleModal(){
     const closeButton = document.querySelector(".close-button");
     trigger.forEach((trig) =>{
         trig.addEventListener("click", e=>{
+            e.preventDefault()
             if(e.target.classList.value === 'remove-todo')return
             populateModal(e.target.id)
             toggleModal()
         });
     })
-    closeButton.addEventListener("click", toggleModal);
-    window.addEventListener("click", windowOnClick);
+    closeButton.addEventListener("onclick", toggleModal);
+    window.addEventListener("onclick", windowOnClick);
 }
 export function removeToDoBtn(){
     const removeToDoBtn = document.querySelectorAll('.remove-todo') 
     removeToDoBtn.forEach((btn) => {
         btn.addEventListener('click', e =>{
+            e.preventDefault()
             const {target} = e
             const currentProject = document.querySelector('.active')
             const project = retrieveProject(currentProject.id)
