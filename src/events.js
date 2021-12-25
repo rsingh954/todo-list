@@ -88,7 +88,7 @@ export function handleModal(){
         });
     })
     closeButton.addEventListener("onclick", toggleModal);
-    window.addEventListener("onclick", windowOnClick);
+    window.addEventListener("click", windowOnClick);
 }
 export function removeToDoBtn(){
     const removeToDoBtn = document.querySelectorAll('.remove-todo') 

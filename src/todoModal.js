@@ -50,7 +50,7 @@ export const modal = () =>{
     const priority = document.createElement('div')
     priority.classList.add('priority-modal')
 
-    const closeModal = document.createElement('span')
+    const closeModal = document.createElement('button')
     closeModal.classList.add('close-button')
     closeModal.textContent = `x`
 
