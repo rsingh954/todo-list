@@ -1,5 +1,5 @@
-import { renderProjects, updateView } from "./renderDom"
-import { retrieveProject, addTodo, addProject, removeTodo, completeTodo} from "./projectManager"
+import { clearForm, renderProjects, updateView } from "./renderDom"
+import { retrieveProject, addTodo, addProject, removeTodo, completeTodo, editTodos, deleteCompletedToDo} from "./projectManager"
 import { todoFactory } from "./todo"
 import { renderToDo } from "./renderDom"
 import { projectForm } from "./domCreation"
@@ -7,17 +7,37 @@ import { Project } from "./projects"
 import { allToDos, renderAllToDos } from "./renderAllToDos";
 import { removeActiveClass, start } from "."
 import { renderCompleteView } from "./completedToDo";
-import {modal, populateModal, toggleModal, windowOnClick} from './todoModal'
+import {editTodo, modal, populateModal, toggleModal, windowOnClick} from './todoModal'
+import { manageLocal } from "./manageLocalStorage"
 
 export function showForm(e){
     e.preventDefault()
+    clearForm()
     const form = document.querySelector('.todo-form-container')
     const active = document.querySelector('.active')
     if(!active) return alert('Please Select Project')
+    const submitBtn = document.querySelector('.submit')
+    submitBtn.textContent = "Submit"
     form.style.display == 'flex' ? form.style.display = 'none':form.style.display = 'flex'
 }
 export function submitToDo(e){
     e.preventDefault()
+    if(e.target.innerHTML == 'Confirm'){
+        const active = document.querySelector('.active')
+        let project = retrieveProject(active.id)
+        const todos = allToDos()
+        const todo = todos.filter((todo) => todo._id == e.target.id)
+
+        const title = document.querySelector('input[name="title"]')
+        const description = document.querySelector('input[name="description"]')
+        const date = document.querySelector('input[name="date"]')
+        const notes = document.querySelector('input[name="notes"]')
+        const priority = document.querySelector('input[name="priority"]:checked').value;
+        console.log(e.target.id)
+
+        editTodos(project,e.target.id,title.value,description.value,notes.value,date.value,priority )
+
+    }
     const active = document.querySelector('.active')
     let project = retrieveProject(active.id)
 
@@ -74,6 +94,14 @@ export const handleCompleteViewEvent = () =>{
         renderCompleteView()
         const todoForm = document.querySelector('.todo-form-container')
         todoForm.style.display = 'none'
+        const remove = document.querySelectorAll('.remove-todo').forEach((r) =>{
+            r.onclick = function(){
+                deleteCompletedToDo(r.previousElementSibling.id)
+                renderCompleteView()
+                start()
+                removeToDoBtn()
+            }
+        })
     })
 }
 export function handleModal(){
@@ -96,11 +124,19 @@ export function removeToDoBtn(){
         btn.addEventListener('click', e =>{
             e.preventDefault()
             const {target} = e
-            const currentProject = document.querySelector('.active')
-            const project = retrieveProject(currentProject.id)
-            console.log(target.id)
-            completeTodo(project, target.id)
-            updateView('todo')
+            const currentProject = document.querySelector('.active') 
+            if(currentProject != null){
+                console.log(currentProject)
+                const project = retrieveProject(currentProject.id)
+                completeTodo(project, target.id)
+                updateView('todo')
+            }else{
+                let project = manageLocal.getCompleted()
+                let id = e.target.previousElementSibling.id
+                deleteCompletedToDo(id)
+                updateView('todo')
+            }
         })
     })
 }
+

@@ -10,8 +10,8 @@ function createID(){
     return Math.floor(Math.random()*100)
 }
 const proto = {
-    getName(){
-    return this._name
+    getName(name){
+    return name == this._name
     },
     setTodo(todo){
         this.todos.push(todo)

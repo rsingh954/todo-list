@@ -9,11 +9,10 @@ import {modal, populateModal, toggleModal, windowOnClick} from './todoModal'
 import { renderCompleteView } from "./completedToDo";
 import { allToDos, renderAllToDos } from "./renderAllToDos";
 
-
-
 const init = (()=>{
+
     let todo = todoFactory('Work', "do shit","", '2021-12-24', "Low")
-    let todo1 = todoFactory('Eat', "make food","", '2021-12-28', "high")
+    let todo1 = todoFactory('Eat', "make food","", '2021-12-28', "High")
     const defaultProject = Project('Welcome');
     const btn = document.querySelector('.add-todo')
     btn.style.display = 'none' 
@@ -29,6 +28,8 @@ const init = (()=>{
     handleCompleteViewEvent()
     handleModal()
     removeToDoBtn()
+
+    renderAllToDos()
 })()
 export function removeActiveClass(){
     const project  = document.querySelectorAll('.p-name')

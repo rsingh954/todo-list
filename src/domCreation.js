@@ -54,7 +54,29 @@ const sidebar = (()=>{
     body.appendChild(sidebar)
     document.body.appendChild(body)
 })()
+const projectForm = (()=>{
+    const form = document.createElement('form')
+    const project = document.querySelector('.project')
+    const input = document.createElement('input')
+    const submit = document.createElement("button")
+    submit.textContent = "✔️"
+    form.classList.add('p-form')
+    if(document.querySelector('.p-form')){
+        const input = document.querySelector('.p-form')
+        input.style.display == 'none'?input.style.display = 'flex': input.style.display = 'none'
+        return
+    } 
+    input.type = 'text'
+    input.classList.add('p-name')
+    input.classList.add('enterProject')
+    form.style.display = 'flex'
 
+    submit.type = 'submit'
+    submit.onclick = submitProject
+    form.appendChild(input)
+    form.appendChild(submit)
+    project.append(form)
+})
 const toDoForm = (() =>{
     const container = document.createElement('div')
     const wrapper =  document.createElement('div')
@@ -72,9 +94,10 @@ const toDoForm = (() =>{
     const priorityContainer = document.createElement('div')
     const btn = document.createElement("button")
     const submit = document.createElement("button")
-    const closeForm = document.createElement('span')
-    closeForm.classList.add('close-button')
+    const closeForm = document.createElement('button')
+    closeForm.classList.add('close-form')
     closeForm.textContent = `x`
+    closeForm.onclick = showForm
     
     btn.classList.add('add-todo')
 
@@ -108,13 +131,13 @@ const toDoForm = (() =>{
     <h4>Priority</h4>
     <div class = priority-container>
     <label class="radio-container">Low</label>
-        <input type="radio" name="priority" value = "low">
+        <input type="radio" name="priority" value = "Low">
 
     <label class="radio-container">Medium</label>
-      <input type="radio" name="priority" value = "medium">
+      <input type="radio" name="priority" value = "Medium">
 
     <label class="radio-container">High</label>
-      <input type="radio" name="priority" value = "high">
+      <input type="radio" name="priority" value = "High">
     </div>
     `
 
@@ -142,30 +165,9 @@ const toDoForm = (() =>{
 
     btn.onclick = showForm
     submit.type = 'submit'
+    submit.classList.add('submit')
     submit.onclick = submitToDo
 
 })()
-const projectForm = (()=>{
-    const form = document.createElement('form')
-    const project = document.querySelector('.project')
-    const input = document.createElement('input')
-    const submit = document.createElement("button")
-    submit.textContent = "✔️"
-    form.classList.add('p-form')
-    if(document.querySelector('.p-form')){
-        const input = document.querySelector('.p-form')
-        input.style.display == 'none'?input.style.display = 'flex': input.style.display = 'none'
-        return
-    } 
-    input.type = 'text'
-    input.classList.add('p-name')
-    input.classList.add('enterProject')
-    form.style.display = 'flex'
 
-    submit.type = 'submit'
-    submit.onclick = submitProject
-    form.appendChild(input)
-    form.appendChild(submit)
-    project.append(form)
-})
 export{header,sidebar, projectForm}

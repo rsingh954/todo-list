@@ -1,7 +1,11 @@
-import { retrieveTodo } from "./renderDom"
-import { format  } from "date-fns"
-import { showForm } from "./events"
+import { clearForm, retrieveTodo } from "./renderDom"
+import { format, sub  } from "date-fns"
+import { showForm, submitToDo } from "./events"
 import { allToDos } from "./renderAllToDos"
+import { projectForm } from "./domCreation"
+import { deleteCompletedToDo, editTodos, retrieveProject } from "./projectManager"
+import { renderCompleteView } from "./completedToDo"
+import { start } from "."
 
 export function populateModal(id) {
     if(!Number(id)) return
@@ -24,10 +28,14 @@ export function populateModal(id) {
     //Priority
     const priority = document.querySelector('.priority-modal')
     priority.textContent = todo[0].priority
+
+    // const button = document.querySelector('.edit-btn')
+    // button.id = todo[0]._id
 }          
 
 
 export const modal = () =>{
+    const active = document.querySelector('.active')
 
     const title = document.createElement('h1')
     title.classList.add('title-modal')
@@ -54,18 +62,64 @@ export const modal = () =>{
     closeModal.classList.add('close-button')
     closeModal.textContent = `x`
 
+    // const editModal = document.createElement('button')
+    // editModal.classList.add('edit-btn')
+    // editModal.innerHTML = 'Edit ✎'
+    
+
+
+    // editModal.onclick = editTodo
     modalContent.appendChild(closeModal)
     modalContent.appendChild(title)
     modalContent.appendChild(modalDescription)
     modalContent.appendChild(notes)
     modalContent.appendChild(dueDate)
     modalContent.appendChild(priority)
+    // modalContent.appendChild(editModal)
     modal.appendChild(modalContent)
 
     const body = document.querySelector('body')
     body.appendChild(modal) 
 
 }
+
+export function editTodo(e){
+    const todos = allToDos()
+    const todo = todos.filter((todo) => todo._id == e.target.id)
+    const active = document.querySelector('.active')
+    if(active.classList.contains('all-todo')){
+        return
+    }
+    let project = retrieveProject(active.id)
+    toggleModal()
+    clearForm()
+    const form = document.querySelector('.todo-form-container')
+    form.style.display = 'flex'
+
+    const title = document.querySelector('input[name="title"]')
+    title.value = todo[0]._title
+
+    const description = document.querySelector('input[name="description"]')
+    description.value = todo[0].description
+
+    const notes = document.querySelector('input[name="notes"]')
+    notes.value = todo[0].notes
+
+    const date = document.querySelector('input[name="date"]')
+    date.value = todo[0].dueDate
+
+    const priority = document.querySelectorAll('input[name="priority"]')
+    priority.forEach((p) => {
+        if(p.value == todo[0].priority){
+            p.checked = true
+        }
+    })
+
+    const submitBtn = document.querySelector('.submit')
+    submitBtn.textContent = "Confirm"
+    submitBtn.id = todo[0]._title
+}
+
 export function toggleModal() {
     const modal = document.querySelector(".modal");
     const trigger = document.querySelector(".container");
@@ -80,4 +134,3 @@ export function windowOnClick(event) {
         toggleModal();
     }
 }
-

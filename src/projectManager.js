@@ -1,6 +1,8 @@
 import { start } from ".";
+import { renderCompleteView } from "./completedToDo";
 import { removeToDoBtn } from "./events";
 import { manageLocal } from "./manageLocalStorage";
+import { renderToDo, updateView } from "./renderDom";
 
     export function addProject(project){
         const projects = manageLocal.getProjects()
@@ -35,13 +37,35 @@ import { manageLocal } from "./manageLocalStorage";
                     if(projects[i].todos[j]._title == title){
                         projects[i].todos.splice(j, 1)
                         localStorage.setItem('projects', JSON.stringify(projects))
-                        localStorage.setItem('complete', JSON.stringify(complete))
                         start()
                         removeToDoBtn()
                     }
                 }
             }
         }
+    }
+    export function editTodos(project, todoTitle, title, description, notes, date, priority){
+        const projects = manageLocal.getProjects()
+        const complete = manageLocal.getCompleted()
+        let [filtered]= projects.filter((f) => f._name === project._name)
+        for(let i = 0; i <= projects.length-1; i++){
+            if(projects[i]._id === filtered._id){
+                for(let j = 0; j <= projects[i].todos.length-1; j++){
+                    if(projects[i].todos[j]._title == todoTitle){
+                        let todo = projects[i].todos[j]
+                        todo._title = title
+                        todo.description = description
+                        todo.notes = notes
+                        todo.dueDate = date
+                        todo.priority = priority
+                        localStorage.setItem('projects', JSON.stringify(projects))
+                        start()
+                        removeToDoBtn()
+                    }
+                }
+            }
+        }
+
     }
     export function completeTodo(project, title){
         const projects = manageLocal.getProjects()
@@ -58,6 +82,19 @@ import { manageLocal } from "./manageLocalStorage";
                         start()
                         removeToDoBtn()
                     }
+                }
+            }
+        }
+    }
+    export function deleteCompletedToDo(id){
+        const complete = manageLocal.getCompleted()
+        let [filtered] = complete.filter((c) => c._id == id)
+        if(filtered){
+            for(let i = 0; i < complete.length; i++){
+                if(complete[i]._id === filtered._id){
+                    complete.splice(i, 1)
+                    localStorage.setItem('complete', JSON.stringify(complete))
+                    removeToDoBtn(id)
                 }
             }
         }
