@@ -19,5 +19,9 @@ export const renderAllToDos = () =>{
     const wrapper = document.querySelector('.todos')
     wrapper.innerHTML = ''
     renderToDo(todos)
+    const right = document.querySelectorAll('.right')
+    right.forEach(r => {
+        r.style.display = 'none'
+    })
     handleModal()
 }
