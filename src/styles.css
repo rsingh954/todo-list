@@ -156,6 +156,9 @@ a {
     border-radius: 1rem;
     padding: 0px 5px;
 }
+.todos{
+    visibility: visible;
+}
 .right{
     display: flex;
     gap: 32px;
@@ -168,18 +171,38 @@ a {
     padding: 16px;
     width: 100vw;
     gap: 25px;
+
 }
 .todo-form-container{
     display: none;
-    text-align: center;
-    width: 30vw;
-    background-color: white;
     flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;
+    position: absolute;
+    gap: 32px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 24rem;
+    border-radius: 0.5rem;
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+
+}
+.show-form{
+    opacity: 1;
+    visibility: visible;
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.close-form {
+    margin-left:auto;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    padding: 5px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
 }
 input{
     max-height: 20px;
@@ -324,8 +347,29 @@ button{
         font-size: 12px;
     }
 
+    .right{
+        gap: 10px;
+    }
+  }
+  @media screen and (max-width: 414px) {
+    .container-heading{
+        display: none;
+    } 
+    .container{
+        flex-direction: column; 
+        border: black 1px solid;
+    }
   }
   
+  @media screen and (max-width: 375px) {
+    .container-heading{
+        display: none;
+    } 
+    .container{
+        flex-direction: column; 
+        border: black 1px solid;
+    }
+  }
   @media screen and (max-width: 350px) {
     .container-heading{
         display: none;

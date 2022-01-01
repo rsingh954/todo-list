@@ -9,6 +9,7 @@ import { removeActiveClass, start } from "."
 import { renderCompleteView } from "./completedToDo";
 import {editTodo, modal, populateModal, toggleModal, windowOnClick} from './todoModal'
 import { manageLocal } from "./manageLocalStorage"
+import PubSub from 'pubsub-js'
 
 export function showForm(e){
     e.preventDefault()
@@ -18,8 +19,16 @@ export function showForm(e){
     if(!active) return alert('Please Select Project')
     const submitBtn = document.querySelector('.submit')
     submitBtn.textContent = "Submit"
-    form.style.display == 'flex' ? form.style.display = 'none':form.style.display = 'flex'
+    if(form.style.display == 'flex'){
+        form.classList.remove('show-form')
+        form.style.display = 'none'
+    }else{
+        form.classList.add('show-form')
+        form.style.display = 'flex'
+    }
 }
+
+
 export function submitToDo(e){
     e.preventDefault()
     if(e.target.innerHTML == 'Confirm'){

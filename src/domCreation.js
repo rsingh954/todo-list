@@ -1,6 +1,6 @@
 import './styles.css'
 import { submitProject, submitToDo, addProject, showForm } from './events';
-
+import PubSub from 'pubsub-js'
 
 const header = (() =>{
     const header = document.createElement('header');
@@ -98,7 +98,6 @@ const toDoForm = (() =>{
     closeForm.classList.add('close-form')
     closeForm.textContent = `x`
     closeForm.onclick = showForm
-    
     btn.classList.add('add-todo')
 
     wrapper.classList.add('wrapper')
