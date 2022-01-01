@@ -36,26 +36,21 @@ export function submitToDo(e){
         let project = retrieveProject(active.id)
         const todos = allToDos()
         const todo = todos.filter((todo) => todo._id == e.target.id)
-
         const title = document.querySelector('input[name="title"]')
         const description = document.querySelector('input[name="description"]')
         const date = document.querySelector('input[name="date"]')
         const notes = document.querySelector('input[name="notes"]')
         const priority = document.querySelector('input[name="priority"]:checked').value;
-        console.log(e.target.id)
-
         editTodos(project,e.target.id,title.value,description.value,notes.value,date.value,priority )
 
     }
     const active = document.querySelector('.active')
     let project = retrieveProject(active.id)
-
     const title = document.querySelector('input[name="title"]')
     const description = document.querySelector('input[name="description"]')
     const date = document.querySelector('input[name="date"]')
     const notes = document.querySelector('input[name="notes"]')
     const priority = document.querySelector('input[name="priority"]:checked').value;
-
     const todo = todoFactory(title.value,description.value,notes.value,date.value,priority)
     let todos = project.todos
     addTodo(project, todo)
@@ -116,10 +111,11 @@ export const handleCompleteViewEvent = () =>{
 export function handleModal(){
     const trigger = document.querySelectorAll(".container");
     const closeButton = document.querySelector(".close-button");
+
     trigger.forEach((trig) =>{
         trig.addEventListener("click", e=>{
             e.preventDefault()
-            if(e.target.classList.value === 'remove-todo')return
+            if(e.target.classList.value === 'remove-todo') return
             populateModal(e.target.id)
             toggleModal()
         });

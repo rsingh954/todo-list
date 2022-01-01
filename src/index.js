@@ -9,8 +9,8 @@ import {modal, populateModal, toggleModal, windowOnClick} from './todoModal'
 import { renderCompleteView } from "./completedToDo";
 import { allToDos, renderAllToDos } from "./renderAllToDos";
 
-const init = (()=>{
 
+const initialize = (()=>{
     let todo = todoFactory('Work', "do shit","", '2021-12-24', "Low")
     let todo1 = todoFactory('Eat', "make food","", '2021-12-28', "High")
     const defaultProject = Project('Welcome');
@@ -28,9 +28,9 @@ const init = (()=>{
     handleCompleteViewEvent()
     handleModal()
     removeToDoBtn()
-
     renderAllToDos()
 })()
+
 export function removeActiveClass(){
     const project  = document.querySelectorAll('.p-name')
     const icon  = document.querySelectorAll('i')
@@ -45,7 +45,7 @@ export function removeActiveClass(){
         p.classList.remove('active')
     })
 }
-function handleActiveClassIcon(target){
+function handleActiveClassIconAndRenderToDo(target){
     let container = document.querySelector('.todos')
     removeActiveClass()
     target.classList.toggle('active')
@@ -73,7 +73,7 @@ export function start(){
                 updateView('project')
                 removeActiveClass()
             }
-            handleActiveClassIcon(target)
+            handleActiveClassIconAndRenderToDo(target)
         })
     })
 }

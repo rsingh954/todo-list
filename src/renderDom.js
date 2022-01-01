@@ -109,7 +109,7 @@ export const retrieveTodo = () =>{
     }
 
 }
-const updateView =(state) =>{
+const updateView = (state) =>{
     if(state == 'todo'){
         const form  = document.querySelector('.todo-form-container')
         let container = document.querySelector('.todos')
