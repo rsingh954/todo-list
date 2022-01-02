@@ -4,7 +4,7 @@ import { renderProjects, renderToDo, updateView } from "./renderDom";
 import { Project } from "./projects";
 import { todoFactory } from "./todo";
 import { addProject, addTodo, removeProject, retrieveProject, removeTodo} from "./projectManager";
-import { addProjectForm, allTodoEvent,handleCompleteViewEvent, handleForm, handleModal, removeToDoBtn} from "./events";
+import { addProjectForm, allTodoEvent,handleCompleteViewEvent, handleForm, handleModal, handleToDoRemovalEvent} from "./events";
 import {modal, populateModal, toggleModal, windowOnClick} from './todoModal'
 import { renderCompleteView } from "./completedToDo";
 import { allToDos, renderAllToDos } from "./renderAllToDos";
@@ -23,11 +23,10 @@ const initialize = (()=>{
     addProjectForm()
     allToDos()
     modal()
-    start()
+    deleteProjectHandler()
     allTodoEvent()
     handleCompleteViewEvent()
-    handleModal()
-    removeToDoBtn()
+    handleToDoRemovalEvent()
     renderAllToDos()
 })()
 
@@ -45,7 +44,7 @@ export function removeActiveClass(){
         p.classList.remove('active')
     })
 }
-function handleActiveClassIconAndRenderToDo(target){
+export function handleActiveClassIconAndRenderToDo(target){
     let container = document.querySelector('.todos')
     removeActiveClass()
     target.classList.toggle('active')
@@ -53,19 +52,21 @@ function handleActiveClassIconAndRenderToDo(target){
     let todo = retrieveProject(target.id).todos
     container.innerHTML = ''
     renderToDo(todo)
-    removeToDoBtn()//Initializes the function or it wont work
+    handleToDoRemovalEvent()//Initializes the function or it wont work
     handleModal()
     const btn = document.querySelector('.add-todo')
     btn.style.display = 'block' 
 
 }
-export function start(){
+export function deleteProjectHandler(){
     const projectNames = document.querySelectorAll('.p-name')
     const getCompletedTodos = manageLocal.getCompleted()
     const completeName = document.querySelector('.completed-count')
     completeName.textContent = " " + getCompletedTodos.length
     projectNames.forEach((name) =>{
         name.addEventListener('click', e =>{
+            e.preventDefault()
+            const projects = document.querySelector('.project')
             const {target} = e
             if(target.classList.contains('active-icon')) {
                 removeProject(target.id)
@@ -73,7 +74,7 @@ export function start(){
                 updateView('project')
                 removeActiveClass()
             }
-            handleActiveClassIconAndRenderToDo(target)
+            handleActiveClassIconAndRenderToDo(projects.lastElementChild)
         })
     })
 }

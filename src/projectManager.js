@@ -1,6 +1,6 @@
-import { start } from ".";
+import { deleteProjectHandler } from ".";
 import { renderCompleteView } from "./completedToDo";
-import { removeToDoBtn } from "./events";
+import { handleToDoRemovalEvent } from "./events";
 import { manageLocal } from "./manageLocalStorage";
 import { renderToDo, updateView } from "./renderDom";
 
@@ -37,8 +37,8 @@ import { renderToDo, updateView } from "./renderDom";
                     if(projects[i].todos[j]._title == title){
                         projects[i].todos.splice(j, 1)
                         localStorage.setItem('projects', JSON.stringify(projects))
-                        start()
-                        removeToDoBtn()
+                        deleteProjectHandler()
+                        handleToDoRemovalEvent()
                     }
                 }
             }
@@ -59,8 +59,8 @@ import { renderToDo, updateView } from "./renderDom";
                         todo.dueDate = date
                         todo.priority = priority
                         localStorage.setItem('projects', JSON.stringify(projects))
-                        start()
-                        removeToDoBtn()
+                        deleteProjectHandler()
+                        handleToDoRemovalEvent()
                     }
                 }
             }
@@ -79,8 +79,8 @@ import { renderToDo, updateView } from "./renderDom";
                         projects[i].todos.splice(j, 1)
                         localStorage.setItem('projects', JSON.stringify(projects))
                         localStorage.setItem('complete', JSON.stringify(complete))
-                        start()
-                        removeToDoBtn()
+                        deleteProjectHandler()
+                        handleToDoRemovalEvent()
                     }
                 }
             }
@@ -94,7 +94,7 @@ import { renderToDo, updateView } from "./renderDom";
                 if(complete[i]._id === filtered._id){
                     complete.splice(i, 1)
                     localStorage.setItem('complete', JSON.stringify(complete))
-                    removeToDoBtn(id)
+                    handleToDoRemovalEvent(id)
                 }
             }
         }

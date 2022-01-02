@@ -5,11 +5,11 @@ import { renderToDo } from "./renderDom"
 import { projectForm } from "./domCreation"
 import { Project } from "./projects"
 import { allToDos, renderAllToDos } from "./renderAllToDos";
-import { removeActiveClass, start } from "."
+import { removeActiveClass, deleteProjectHandler } from "."
 import { renderCompleteView } from "./completedToDo";
 import {editTodo, modal, populateModal, toggleModal, windowOnClick} from './todoModal'
 import { manageLocal } from "./manageLocalStorage"
-import PubSub from 'pubsub-js'
+import {handleActiveClassIconAndRenderToDo} from './index'
 
 export function showForm(e){
     e.preventDefault()
@@ -28,21 +28,24 @@ export function showForm(e){
     }
 }
 
+export function handleEditTodo(e){
+    const active = document.querySelector('.active')
+    let project = retrieveProject(active.id)
+    const todos = allToDos()
+    const todo = todos.filter((todo) => todo._id == e.target.id)
+    const title = document.querySelector('input[name="title"]')
+    const description = document.querySelector('input[name="description"]')
+    const date = document.querySelector('input[name="date"]')
+    const notes = document.querySelector('input[name="notes"]')
+    const priority = document.querySelector('input[name="priority"]:checked').value;
+    editTodos(project,e.target.id,title.value,description.value,notes.value,date.value,priority )
+    return
+}
 
 export function submitToDo(e){
     e.preventDefault()
     if(e.target.innerHTML == 'Confirm'){
-        const active = document.querySelector('.active')
-        let project = retrieveProject(active.id)
-        const todos = allToDos()
-        const todo = todos.filter((todo) => todo._id == e.target.id)
-        const title = document.querySelector('input[name="title"]')
-        const description = document.querySelector('input[name="description"]')
-        const date = document.querySelector('input[name="date"]')
-        const notes = document.querySelector('input[name="notes"]')
-        const priority = document.querySelector('input[name="priority"]:checked').value;
-        editTodos(project,e.target.id,title.value,description.value,notes.value,date.value,priority )
-
+        handleEditTodo(e)
     }
     const active = document.querySelector('.active')
     let project = retrieveProject(active.id)
@@ -55,7 +58,7 @@ export function submitToDo(e){
     let todos = project.todos
     addTodo(project, todo)
     updateView('todo')
-    removeToDoBtn()
+    handleToDoRemovalEvent()
     start()
 }
 export function addProjectForm(){
@@ -63,8 +66,8 @@ export function addProjectForm(){
     addProject.addEventListener('click',projectForm) 
 }
 export function submitProject(e){
-    const name = e.target.previousElementSibling.value
     e.preventDefault()
+    const name = e.target.previousElementSibling.value
     if(name === "") {
         alert("please enter a name")
         return
@@ -72,6 +75,8 @@ export function submitProject(e){
     const newProject = Project(name)
     addProject(newProject)
     updateView('project')
+    const projects = document.querySelector('.project')
+    handleActiveClassIconAndRenderToDo(projects.lastElementChild)
     return
 }
 export const allTodoEvent = () =>{
@@ -102,8 +107,8 @@ export const handleCompleteViewEvent = () =>{
             r.onclick = function(){
                 deleteCompletedToDo(r.previousElementSibling.id)
                 renderCompleteView()
-                start()
-                removeToDoBtn()
+                deleteProjectHandler()
+                handleToDoRemovalEvent()
             }
         })
     })
@@ -111,7 +116,7 @@ export const handleCompleteViewEvent = () =>{
 export function handleModal(){
     const trigger = document.querySelectorAll(".container");
     const closeButton = document.querySelector(".close-button");
-
+    
     trigger.forEach((trig) =>{
         trig.addEventListener("click", e=>{
             e.preventDefault()
@@ -123,7 +128,7 @@ export function handleModal(){
     closeButton.addEventListener("onclick", toggleModal);
     window.addEventListener("click", windowOnClick);
 }
-export function removeToDoBtn(){
+export function handleToDoRemovalEvent(){
     const removeToDoBtn = document.querySelectorAll('.remove-todo') 
     removeToDoBtn.forEach((btn) => {
         btn.addEventListener('click', e =>{

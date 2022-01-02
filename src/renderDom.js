@@ -1,9 +1,9 @@
 import { manageLocal } from "./manageLocalStorage";
 import { retrieveProject } from './projectManager';
-import { start } from ".";
+import { deleteProjectHandler } from ".";
 import { format, parseISO  } from "date-fns"
 import { handleModal } from "./events";
-import { removeToDoBtn } from "./events";
+import { handleToDoRemovalEvent } from "./events";
 import { editTodo } from "./todoModal";
 const renderProjects = (()=>{
     const projects = manageLocal.getProjects()
@@ -116,7 +116,7 @@ const updateView = (state) =>{
         container.innerHTML = '';
         renderToDo(retrieveTodo())
         form.style.display = 'none'
-        removeToDoBtn()
+        handleToDoRemovalEvent()
         handleModal()
     }
     if(state == 'project'){
@@ -125,7 +125,7 @@ const updateView = (state) =>{
         sidebar.innerHTML = ''
         container.innerHTML = '';
         renderProjects()
-        start()
+        deleteProjectHandler()
     }
     
 }

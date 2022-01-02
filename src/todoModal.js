@@ -29,8 +29,6 @@ export function populateModal(id) {
     const priority = document.querySelector('.priority-modal')
     priority.textContent = todo[0].priority
 
-    // const button = document.querySelector('.edit-btn')
-    // button.id = todo[0]._id
 }          
 
 
@@ -61,21 +59,12 @@ export const modal = () =>{
     const closeModal = document.createElement('button')
     closeModal.classList.add('close-button')
     closeModal.textContent = `x`
-
-    // const editModal = document.createElement('button')
-    // editModal.classList.add('edit-btn')
-    // editModal.innerHTML = 'Edit ✎'
-    
-
-
-    // editModal.onclick = editTodo
     modalContent.appendChild(closeModal)
     modalContent.appendChild(title)
     modalContent.appendChild(modalDescription)
     modalContent.appendChild(notes)
     modalContent.appendChild(dueDate)
     modalContent.appendChild(priority)
-    // modalContent.appendChild(editModal)
     modal.appendChild(modalContent)
 
     const body = document.querySelector('body')
